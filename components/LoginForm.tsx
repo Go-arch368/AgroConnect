@@ -1,97 +1,102 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity,Pressable } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Pressable, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Background from './Background'; // Adjust import path as needed
 
 const Login = () => {
-  const router = useRouter()
-  const [form,setForm]= useState({
-    username:"",
-    password:""
-  })
-  const [clientErrors, setClientErrors] = useState<{ username: string; password: string }>({ username: "", password: "" })
+  const router = useRouter();
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [clientErrors, setClientErrors] = useState({ email: '', password: '' });
 
-    let errors:any={};
+  const validate = () => {
+  let errors = { email: '', password: '' };
 
-  function validate(){
+  if (!form.email.trim()) errors.email = 'Email is required';
+  if (!form.password.trim()) errors.password = 'Password is required';
 
-    if(form.username===""){
-      errors.username = "Username is required"
-    }
-    if(form.password===""){
-      errors.password = "Password is required"
-    }
+  setClientErrors(errors);
 
-  }
-  
+  // Check if any errors exist
+  return !errors.email && !errors.password;
+};
 
-  const handleSubmit = async() => {
-    
-    validate()
 
-    if(Object.keys(errors).length!==0){
-         setClientErrors(errors)
-    }
-  else{
-    console.log(form)
-    const userData = {
-      username:form.username,
-    }
+const handleSubmit = async () => {
+  if (!validate()) return;
+  const userData = { email: form.email, password: form.password };
+  console.log('Storing user data:', userData);
+  await AsyncStorage.setItem('userData', JSON.stringify(userData.email));
+  console.log('Navigating to dashboard...');
+  router.push('/dashboard');
+};
 
-    await AsyncStorage.setItem("userData",JSON.stringify(userData))
-    router.push("/dashboard")
-    
-  }
-   
-  };
 
   return (
-    <View className="flex-1 justify-center items-center bg-white px-6">
-      <Text className="text-3xl font-bold mb-8">LOGIN</Text>
+    <Background>
+      <View className="w-full items-center">
+     
+        <Image
+          source={require('../assets/images/logo.png')}
+          style={{ width: 96, height: 96, marginBottom: 24, marginTop: 24 }}
+          resizeMode="contain"
+        />
 
-      <View className="w-full max-w-md">
-        <Text className="font-bold mb-2">Username</Text>
+        <Text className="text-2xl font-bold mb-8 text-purple-600 text-center">Welcome back.</Text>
+
+      
         <TextInput
-          className="bg-gray-100 rounded-lg px-4 py-3 mb-4 text-base text-black"
-          placeholder="Enter your username"
-          placeholderTextColor="#6b7280"
-          value={form.username}
-          onChangeText={(text) => setForm({ ...form, username: text })}
+          className="bg-white border border-gray-400 rounded-md px-4 py-3 mb-4 text-base w-full"
+          placeholder="Email"
+          placeholderTextColor="#888"
+          value={form.email}
+          onChangeText={text => setForm({ ...form, email: text })}
+          keyboardType="email-address"
           autoCapitalize="none"
         />
-        {clientErrors?.username && <Text className="text-red-500 mb-2">{clientErrors.username}</Text>}
+        {clientErrors.email ? (
+          <Text className="text-red-500 mb-2 w-full">{clientErrors.email}</Text>
+        ) : null}
 
-        <Text className="font-bold mb-2">Password</Text>
+        
         <TextInput
-          className="bg-gray-100 rounded-lg px-4 py-3 mb-4 text-base text-black"
-          placeholder="Enter your password"
-          placeholderTextColor="#6b7280"
+          className="bg-white border border-gray-400 rounded-md px-4 py-3 mb-2 text-base w-full"
+          placeholder="Password"
+          placeholderTextColor="#888"
           value={form.password}
-          secureTextEntry={true}
-          onChangeText={(text: string) => setForm({ ...form, password: text })}
+          secureTextEntry
+          onChangeText={text => setForm({ ...form, password: text })}
           autoCapitalize="none"
         />
+        {clientErrors.password ? (
+          <Text className="text-red-500 mb-2 w-full">{clientErrors.password}</Text>
+        ) : null}
 
-        {clientErrors?.password&&<Text className='text-red-500 mb-2'>{clientErrors?.password}</Text>}
-
-        {/* Optional checkbox could go here */}
-
-        <TouchableOpacity className="bg-gray-200 rounded-lg py-3 mt-4" activeOpacity={0.8} onPress={handleSubmit}>
-          <Text className="font-bold text-lg text-gray-800 text-center">Login</Text>
+        <TouchableOpacity
+          className="mb-7 mt-2 self-end"
+          onPress={() => { router.push("/forgotPassword") }}
+        >
+          <Text className="text-xs text-gray-500">Forgot your password?</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity className="mt-3">
-          <Text className="text-gray-600 text-center">Forgot password</Text>
+     
+        <TouchableOpacity
+          className="bg-purple-600 rounded-md py-4 mb-6 w-full"
+          activeOpacity={0.85}
+          onPress={handleSubmit}
+        >
+          <Text className="text-white font-bold text-lg text-center tracking-wider">LOGIN</Text>
         </TouchableOpacity>
 
-        <View className="mt-10 flex-row justify-center">
-          <Text className="text-gray-700">Not a member? </Text>
-            <Pressable onPress={() => router.push("/signup")}>
-                      <Text className="font-bold text-black">Sign up</Text>
-                    </Pressable>
+      
+        <View className="flex-row justify-center w-full">
+          <Text className="text-gray-700">Don’t have an account? </Text>
+          <Pressable onPress={() => router.push('/signup')}>
+            <Text className="font-bold text-purple-600 underline ml-1">Sign up</Text>
+          </Pressable>
         </View>
       </View>
-    </View>
+    </Background>
   );
 };
 

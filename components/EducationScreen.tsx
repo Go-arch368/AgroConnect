@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
-import { Hospital } from "lucide-react-native";
+import { GraduationCap } from "lucide-react-native";
 
 const statesData = [
   { key: "ka", value: "Karnataka" },
   { key: "mh", value: "Maharashtra" },
 ];
 
-const districtsData: { [key: string]: { key: string; value: string }[] } = {
+const districtsData : { [key: string]: { key: string; value: string }[] } = {
   ka: [
     { key: "bl", value: "Bangalore" },
     { key: "mg", value: "Mangalore" },
@@ -19,7 +19,7 @@ const districtsData: { [key: string]: { key: string; value: string }[] } = {
   ],
 };
 
-const talukasData : { [key: string]: { key: string; value: string }[] } = {
+const talukasData: { [key: string]: { key: string; value: string }[] } = {
   bl: [
     { key: "ec", value: "East City" },
     { key: "wc", value: "West City" },
@@ -38,7 +38,7 @@ const talukasData : { [key: string]: { key: string; value: string }[] } = {
   ],
 };
 
-const HealthScreen = () => {
+const EducationScreen = () => {
   const [selectedState, setSelectedState] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedTaluka, setSelectedTaluka] = useState("");
@@ -59,7 +59,7 @@ const HealthScreen = () => {
       >
         {/* Header */}
         <Text className="text-2xl font-bold mb-10 text-purple-600 text-center">
-          Health
+          Education
         </Text>
 
         {/* Step 1 */}
@@ -122,24 +122,26 @@ const HealthScreen = () => {
               selectedTaluka ? "text-white" : "text-gray-500"
             }`}
           >
-            Search Hospitals
+            Search Schools
           </Text>
         </TouchableOpacity>
 
-        {/* Hospital List Preview */}
+        {/* Schools List Preview (Sample) */}
         {searchTriggered ? (
           <View className="pb-10">
             <Text className="text-lg font-bold mb-4 text-purple-600">
-              Available Hospitals
+              Available Schools
             </Text>
-            {[1, 2, 3, 4, 5, 6, 7].map((_, i) => (
+            {[1, 2, 3, 4, 5].map((_, i) => (
               <View
                 key={i}
                 className="flex-row items-center bg-white rounded-xl p-4 mb-3 shadow-sm border border-gray-100"
               >
-                <Hospital color="#7c3aed" size={24} />
+                <GraduationCap color="#7c3aed" size={24} />
                 <View className="ml-3">
-                  <Text className="font-semibold text-gray-800">Hospital {i + 1}</Text>
+                  <Text className="font-semibold text-gray-800">
+                    School {i + 1}
+                  </Text>
                   <Text className="text-sm text-gray-500">Address details here</Text>
                 </View>
               </View>
@@ -147,7 +149,7 @@ const HealthScreen = () => {
           </View>
         ) : (
           <Text className="mt-2 text-base text-gray-500 italic text-center">
-            Please select State, District, and Taluka to search hospitals
+            Please select State, District, and Taluka to search schools
           </Text>
         )}
       </ScrollView>
@@ -155,4 +157,4 @@ const HealthScreen = () => {
   );
 };
 
-export default HealthScreen;
+export default EducationScreen;

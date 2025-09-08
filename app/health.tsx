@@ -4,7 +4,7 @@ import HealthScreen from '@/components/HealthScreen'
 
 const Health = () => {
   return (
-    <View>
+    <View className='flex-1'>
       <HealthScreen/>
     </View>
   )

@@ -1,46 +1,62 @@
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
-import { SearchIcon } from 'lucide-react-native';
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { Search } from "lucide-react-native";
 
 const SearchUsers = () => {
-  const [searchValue, setSearchValue] = useState('');
-  const [memberId, setMemberId] = useState('');
+  const [searchValue, setSearchValue] = useState("");
+  const [memberId, setMemberId] = useState("");
 
   return (
-    <View className="flex-1 px-5 py-8 bg-white">
-     
-      <View className="flex-row items-center justify-center mb-10">
-        <SearchIcon size={34} />
-        <Text className="font-bold text-3xl ml-4">Search Member</Text>
+    <View className="flex-1 bg-gray-50 px-5 py-8">
+      {/* Header */}
+      <View className="flex-row items-center justify-center mb-8">
+        <Search size={34} color="#7c3aed" />
+        <Text className="ml-3 text-2xl font-bold text-purple-600">
+          Search Member
+        </Text>
       </View>
 
-     
-      <View className="mb-12 items-center">
-        <Text className="font-semibold text-lg mb-2">- Mobile/Member ID No</Text>
+      {/* Search Card */}
+      <View className="bg-white rounded-2xl shadow-md p-6 mb-8">
+        <Text className="font-semibold text-base text-gray-700 mb-3">
+          Enter Mobile Number / Member ID
+        </Text>
         <TextInput
-          className="bg-gray-200 rounded-lg h-12 w-60 px-4 mb-8 text-base"
-          placeholder="Enter mobile or member ID"
+          className="bg-gray-100 rounded-xl h-12 px-4 text-base mb-4 border border-gray-200"
+          placeholder="e.g. 9876543210 or MEM1234"
+          placeholderTextColor="#9ca3af"
           value={searchValue}
           onChangeText={setSearchValue}
         />
-        <TouchableOpacity className="bg-gray-100 rounded-lg h-12 w-60 items-center justify-center mb-10">
-          <Text className="font-semibold text-lg text-gray-700">Search Button</Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+               className="flex-row items-center justify-center bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl py-4 mb-8 shadow-md"
+          
+             >
+               <Search color="#fff" size={20} />
+               <Text className="ml-2 text-md font-semibold text-center text-white">
+                 Search 
+               </Text>
+             </TouchableOpacity>
       </View>
 
-      
-      <View className="items-center">
-        <Text className="font-bold text-base mb-2">Member ID</Text>
+      {/* Result Card */}
+      <View className="bg-white rounded-2xl shadow-md p-6 items-center">
+        <Text className="font-bold text-base text-gray-700 mb-3">
+          Member ID
+        </Text>
         <TextInput
-          className="bg-gray-200 rounded-lg h-12 w-60 px-4 text-base mb-2"
+          className="bg-gray-100 rounded-xl h-12 w-full px-4 text-base border border-gray-200 mb-3"
           placeholder="Member ID"
+          placeholderTextColor="#9ca3af"
           value={memberId}
           editable={false}
         />
-       
-        <View className="w-60 mt-2">
+
+        {/* Placeholder result fields */}
+        <View className="w-full mt-2">
           <View className="bg-gray-100 h-4 rounded mb-2" />
           <View className="bg-gray-100 h-4 rounded mb-2" />
+          <View className="bg-gray-100 h-4 rounded" />
         </View>
       </View>
     </View>

@@ -1,63 +1,113 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Pressable } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Pressable, Image } from 'react-native';
 import { useRouter } from 'expo-router';
+import Background from './Background'; // Or use ImageBackground as before
 
 const Signup = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter()
+  const [errors, setErrors] = useState({ name: '', email: '', password: '' });
+  const router = useRouter();
+
+  const validate = () => {
+    let valid = true;
+    const newErrors = { name: '', email: '', password: '' };
+
+    if (!name.trim()) {
+      newErrors.name = 'Name is required';
+      valid = false;
+    }
+    if (!email.trim()) {
+      newErrors.email = 'Email is required';
+      valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = 'Enter a valid email';
+      valid = false;
+    }
+    if (!password) {
+      newErrors.password = 'Password is required';
+      valid = false;
+    } else if (password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+      valid = false;
+    }
+    setErrors(newErrors);
+    return valid;
+  };
+
+  const handleSignup = () => {
+    if (validate()) {
+      // Handle your signup logic here (e.g., API call)
+      // On success, route to dashboard or login
+      router.push('/dashboard');
+    }
+  };
+
   return (
-    <View className="flex-1 justify-center items-center bg-white px-6">
-      <Text className="text-3xl font-bold mb-8">SIGN UP</Text>
-
-      <View className="w-full max-w-md">
-
-         <Text className="font-bold mb-2">Username</Text>
-        <TextInput
-          className="bg-gray-100 rounded-lg px-4 py-3 mb-4 text-base text-black"
-          placeholder="Choose a username"
-          placeholderTextColor="#6b7280"
-          value={username}
-          onChangeText={setUsername}
-          autoCapitalize="none"
+    <Background>
+      <View className="w-full items-center">
+       
+        <Image
+          source={require('../assets/images/logo.png')}
+          style={{ width: 106, height: 106, marginBottom: 24, marginTop: 24 }}
+          resizeMode="contain"
         />
 
-        <Text className="font-bold mb-2">Email</Text>
+
+        <Text className="text-2xl font-bold mb-8 text-purple-600 text-center">Create Account</Text>
+
+    
         <TextInput
-          className="bg-gray-100 rounded-lg px-4 py-3 mb-4 text-base text-black"
-          placeholder="Enter your email"
-          placeholderTextColor="#6b7280"
+          className="bg-white border border-gray-400 rounded-md px-4 py-3 mb-2 text-base w-full"
+          placeholder="Name"
+          placeholderTextColor="#888"
+          value={name}
+          onChangeText={setName}
+          autoCapitalize="words"
+        />
+        {errors.name ? <Text className="text-red-500 mb-2 w-full">{errors.name}</Text> : null}
+
+        
+        <TextInput
+          className="bg-white border border-gray-400 rounded-md px-4 py-3 mb-2 text-base w-full"
+          placeholder="Email"
+          placeholderTextColor="#888"
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"
           keyboardType="email-address"
         />
+        {errors.email ? <Text className="text-red-500 mb-2 w-full">{errors.email}</Text> : null}
 
-      
-
-        <Text className="font-bold mb-2">Password</Text>
+    
         <TextInput
-          className="bg-gray-100 rounded-lg px-4 py-3 mb-2 text-base text-black"
-          placeholder="Enter your password"
-          placeholderTextColor="#6b7280"
+          className="bg-white border border-gray-400 rounded-md px-4 py-3 mb-4 text-base w-full"
+          placeholder="Password"
+          placeholderTextColor="#888"
           value={password}
-          secureTextEntry={true}
+          secureTextEntry
           onChangeText={setPassword}
         />
+        {errors.password ? <Text className="text-red-500 mb-2 w-full">{errors.password}</Text> : null}
 
-        <TouchableOpacity className="bg-gray-200 rounded-lg py-3 mt-4" activeOpacity={0.8}>
-          <Text className="font-bold text-lg text-gray-800 text-center">Sign Up</Text>
+        <TouchableOpacity
+          className="bg-purple-600 rounded-md py-4 mb-6 w-full"
+          activeOpacity={0.85}
+          onPress={handleSignup}
+        >
+          <Text className="text-white font-bold text-lg text-center tracking-wider">SIGN UP</Text>
         </TouchableOpacity>
 
-        <View className="mt-10 flex-row justify-center">
+       
+        <View className="flex-row justify-center w-full mt-2">
           <Text className="text-gray-700">Already have an account? </Text>
-          <Pressable onPress={() => router.push("/login")}>
-            <Text className="font-bold text-black">Sign in</Text>
+          <Pressable onPress={() => router.push('/login')}>
+            <Text className="font-bold text-purple-600 underline ml-1">Login</Text>
           </Pressable>
         </View>
       </View>
-    </View>
+    </Background>
   );
 };
 

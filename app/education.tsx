@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-
+import EducationScreen from '@/components/EducationScreen'
 const Education = () => {
   return (
-    <View className='flex-1 items-center px-3 py-7'>
-      <Text className=' text-2xl font-semibold'>Education</Text>
+    <View className='flex-1'>
+      <EducationScreen/>
     </View>
   )
 }

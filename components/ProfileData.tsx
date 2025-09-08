@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, ScrollView } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, Modal, ScrollView } from "react-native";
 import {
   User,
   HeartPulse,
@@ -7,40 +7,51 @@ import {
   Settings,
   PhoneCall,
   Mail,
-  MessageCircle
-} from 'lucide-react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRouter } from 'expo-router';
+  MessageCircle,
+  LogOut,
+  Search,
+} from "lucide-react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
+
+const SectionHeader = ({ title }: { title: string }) => (
+  <Text className="text-xl font-semibold mb-5 text-gray-800">{title}</Text>
+);
 
 const NotificationsSection = () => (
-  <View className="mb-8">
-    <Text className="mb-2 text-base font-semibold text-gray-700">Notifications</Text>
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-    >
-      <View className="bg-gray-200 rounded-lg mr-4 h-20 w-32" />
-      <View className="bg-gray-200 rounded-lg mr-4 h-20 w-32" />
-      <View className="bg-gray-200 rounded-lg mr-4 h-20 w-32" />
+  <View className="mb-10">
+    <SectionHeader title="Notifications" />
+    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      {[1, 2, 3].map((_, i) => (
+        <View
+          key={i}
+          className="bg-white border border-gray-100 rounded-xl mr-4 h-24 w-44 items-center justify-center shadow-sm"
+        >
+          <Text className="text-gray-800 font-medium text-sm">
+            Update {i + 1}
+          </Text>
+          <Text className="text-xs text-gray-500 mt-1">2h ago</Text>
+        </View>
+      ))}
     </ScrollView>
   </View>
 );
 
 const ContactUsSection = () => (
-  <View className="my-4">
-    <Text className="mb-3 text-base font-semibold text-gray-700">Contact Us / Helpdesk</Text>
-    <View className="flex-row justify-between bg-gray-100 rounded-lg p-2">
-      <TouchableOpacity className="flex-1 mx-1 rounded-lg items-center py-4">
-        <PhoneCall color="#555" size={24} />
-        <Text className="mt-1 text-sm font-semibold">Call</Text>
+  <View className="mb-12">
+    <SectionHeader title="Contact Us / Helpdesk" />
+    <View className="flex-row justify-between">
+      <TouchableOpacity className="flex-1 mx-1 rounded-xl items-center py-6 bg-white shadow-md border border-gray-100">
+        <PhoneCall color="#7c3aed" size={26} />
+        <Text className="mt-2 text-sm font-medium text-gray-700">Call</Text>
       </TouchableOpacity>
-      <TouchableOpacity className="flex-1 mx-1 rounded-lg items-center py-4">
-        <MessageCircle color="#27ae60" size={24} />
-        <Text className="mt-1 text-sm font-semibold">WhatsApp</Text>
+      <TouchableOpacity className="flex-1 mx-1 rounded-xl items-center py-6 bg-white shadow-md border border-gray-100">
+        <MessageCircle color="#22c55e" size={26} />
+        <Text className="mt-2 text-sm font-medium text-gray-700">WhatsApp</Text>
       </TouchableOpacity>
-      <TouchableOpacity className="flex-1 mx-1 rounded-lg items-center py-4">
-        <Mail color="#555" size={24} />
-        <Text className="mt-1 text-sm font-semibold">Email</Text>
+      <TouchableOpacity className="flex-1 mx-1 rounded-xl items-center py-6 bg-white shadow-md border border-gray-100">
+        <Mail color="#e11d48" size={26} />
+        <Text className="mt-2 text-sm font-medium text-gray-700">Email</Text>
       </TouchableOpacity>
     </View>
   </View>
@@ -48,89 +59,123 @@ const ContactUsSection = () => (
 
 const ProfileScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     const fetchUser = async () => {
-      const storedUser = await AsyncStorage.getItem('userData');
-      setUserName(storedUser ? JSON.parse(storedUser).username ?? '' : '');
+      const storedUser = await AsyncStorage.getItem("userData");
+      setUserName(storedUser ? JSON.parse(storedUser).username ?? "" : "");
     };
     fetchUser();
   }, []);
 
   const handleLogout = async () => {
-    await AsyncStorage.removeItem('userData');
+    await AsyncStorage.removeItem("userData");
     setModalVisible(false);
-    router.push('/login');
+    router.push("/login");
   };
 
   return (
-    <View className="flex-1 bg-white px-6 py-8">
-      {/* Profile Header */}
-      <TouchableOpacity
-        className="flex-row items-center mb-8"
-        onPress={() => setModalVisible(true)}
-      >
-        <View className="w-10 h-10 bg-gray-200 rounded-full items-center justify-center">
-          <User color="#555" size={28} />
+    <ScrollView className="flex-1 bg-gray-50">
+      <View className="px-6 py-10">
+        {/* Profile Header */}
+        <TouchableOpacity
+          className="flex-row items-center mb-10"
+          onPress={() => setModalVisible(true)}
+        >
+          <View className="w-12 h-12 bg-purple-100 rounded-full items-center justify-center shadow">
+            <User color="#7c3aed" size={26} />
+          </View>
+          <View>
+          
+            <Text className="text-xl font-semibold ml-3 text-gray-800"> Profile</Text>
+          </View>
+        </TouchableOpacity>
+
+        {/* Quick Actions */}
+        <SectionHeader title="Quick Actions" />
+        <View className="flex-row justify-between mb-10">
+          <TouchableOpacity
+            className="flex-1 mx-1 bg-white shadow-md border border-gray-100 rounded-xl items-center py-6"
+            onPress={() => router.push("/health")}
+          >
+            <HeartPulse color="#7c3aed" size={26} />
+            <Text className="mt-2 text-sm font-medium text-gray-700">
+              Health
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="flex-1 mx-1 bg-white shadow-md border border-gray-100 rounded-xl items-center py-6"
+            onPress={() => router.push("/education")}
+          >
+            <GraduationCap color="#16a34a" size={26} />
+            <Text className="mt-2 text-sm font-medium text-gray-700">
+              Education
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="flex-1 mx-1 bg-white shadow-md border border-gray-100 rounded-xl items-center py-6"
+            onPress={() => router.push("/services")}
+          >
+            <Settings color="#f59e0b" size={26} />
+            <Text className="mt-2 text-sm font-medium text-gray-700">
+              Services
+            </Text>
+          </TouchableOpacity>
         </View>
-        <Text className="ml-3 text-xl font-bold text-gray-800">Profile</Text>
-      </TouchableOpacity>
+
+        {/* Search Member */}
+        <TouchableOpacity
+          className="flex-row items-center justify-center bg-purple-600 rounded-xl py-4 mb-12 shadow-md"
+          onPress={() => router.push("/searchUser")}
+        >
+          <Search color="#fff" size={18} />
+          <Text className="ml-2 text-base font-semibold text-white">
+            Search Member
+          </Text>
+        </TouchableOpacity>
+
+        {/* Sections */}
+        <NotificationsSection />
+        <ContactUsSection />
+      </View>
 
       {/* Profile Modal */}
       <Modal
         visible={modalVisible}
-        transparent={true}
+        transparent
         animationType="fade"
         onRequestClose={() => setModalVisible(false)}
       >
-        <View className="flex-1 items-center justify-center p-5 bg-black/40">
-          <View className="bg-white rounded-xl p-6 w-72 items-center">
-            <User color="#555" size={40} />
-            <Text className="mt-2 text-lg font-bold text-gray-800">Logged in as</Text>
+        <View className="flex-1 items-center justify-center p-5 bg-black/50">
+          <View className="bg-white rounded-2xl p-6 w-80 items-center shadow-lg">
+            <User color="#374151" size={40} />
+            <Text className="mt-3 text-lg font-semibold text-gray-800">
+              Logged in as
+            </Text>
             <Text className="text-base mt-1 text-gray-600">{userName}</Text>
+
             <TouchableOpacity
-              className="mt-4 px-4 py-2 bg-gray-200 rounded-lg"
+              className="mt-6 flex-row items-center justify-center px-6 py-3 bg-red-500 rounded-xl w-full"
               onPress={handleLogout}
             >
-              <Text className="font-bold text-md text-gray-800">Logout</Text>
+              <LogOut color="#fff" size={18} />
+              <Text className="ml-2 font-semibold text-white text-base">
+                Logout
+              </Text>
             </TouchableOpacity>
+
             <TouchableOpacity
-              className="mt-2"
+              className="mt-3"
               onPress={() => setModalVisible(false)}
             >
-              <Text className="text-sm text-blue-500">Close</Text>
+              <Text className="text-sm text-blue-600 font-medium">Close</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
-
-      {/* Health, Education, Services */}
-      <View className="flex-row justify-between mb-6">
-        <TouchableOpacity className="flex-1 mx-1 bg-gray-200 rounded-lg items-center py-5" onPress={()=>router.push("/health")}>
-          <HeartPulse color="#555" size={24} />
-          <Text className="mt-1 text-sm font-semibold">Health</Text>
-        </TouchableOpacity>
-        <TouchableOpacity className="flex-1 mx-1 bg-gray-200 rounded-lg items-center py-5" onPress={()=>router.push("/education")}>
-          <GraduationCap color="#555" size={24} />
-          <Text className="mt-1 text-sm font-semibold">Education</Text>
-        </TouchableOpacity>
-        <TouchableOpacity className="flex-1 mx-1 bg-gray-200 rounded-lg items-center py-5" onPress={()=>router.push("/services")}>
-          <Settings color="#555" size={24} />
-          <Text className="mt-1 text-sm font-semibold">Services</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Search Member Button */}
-      <TouchableOpacity className="bg-gray-100 rounded-lg py-4 mb-6" onPress={()=>router.push("/searchUser")}>
-        <Text className="text-md font-semibold text-center text-gray-700">Search Member</Text>
-      </TouchableOpacity>
-
-      {/* Notifications & Contact Us Sections */}
-      <NotificationsSection />
-      <ContactUsSection />
-    </View>
+    </ScrollView>
   );
 };
 
