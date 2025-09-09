@@ -60,16 +60,26 @@ const handleSubmit = async () => {
 
         
         <TextInput
-          className="bg-white border border-gray-400 rounded-md px-4 py-3 mb-2 text-base w-full"
-          placeholder="Password"
-          placeholderTextColor="#888"
-          value={form.password}
-          secureTextEntry
-          onChangeText={text => setForm({ ...form, password: text })}
-          autoCapitalize="none"
-        />
+  placeholder="Password"
+  placeholderTextColor="#888"
+  secureTextEntry={true}
+  value={form.password}
+  onChangeText={text => setForm({ ...form, password: text })}
+  autoCapitalize="none"
+  style={{
+    backgroundColor: '#fff',
+    borderColor: '#9ca3af',
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    fontSize: 16,
+    color: '#000' // make sure text is black or visible color
+  }}
+/>
+
         {clientErrors.password ? (
-          <Text className="text-red-500 mb-2 w-full">{clientErrors.password}</Text>
+          <Text className="text-red-500 mb-2 w-full ">{clientErrors.password}</Text>
         ) : null}
 
         <TouchableOpacity

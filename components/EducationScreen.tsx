@@ -108,23 +108,31 @@ const EducationScreen = () => {
         />
 
         {/* Search Button */}
-        <TouchableOpacity
-          className={`rounded-2xl py-4 mb-10 shadow-md ${
-            selectedTaluka
-              ? "bg-gradient-to-r from-purple-500 to-purple-600"
-              : "bg-gray-300"
-          }`}
-          disabled={!selectedTaluka}
-          onPress={handleSearch}
-        >
-          <Text
-            className={`text-md font-semibold text-center ${
-              selectedTaluka ? "text-white" : "text-gray-500"
-            }`}
-          >
-            Search Schools
-          </Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+         style={{
+           borderRadius: 16,
+           paddingVertical: 16,
+           marginBottom: 40,
+           backgroundColor: selectedTaluka ? "#7c3aed" : "#d1d5db", // fallback to solid color
+           shadowColor: "#000",
+           shadowOpacity: 0.1,
+           shadowRadius: 2,
+           shadowOffset: { width: 0, height: 1 },
+         }}
+         disabled={!selectedTaluka}
+         onPress={handleSearch}
+       >
+         <Text
+           style={{
+             fontSize: 16,
+             fontWeight: "600",
+             color: selectedTaluka ? "#fff" : "#6b7280",
+             textAlign: "center",
+           }}
+         >
+           Search Schools
+         </Text>
+       </TouchableOpacity>
 
         {/* Schools List Preview (Sample) */}
         {searchTriggered ? (
