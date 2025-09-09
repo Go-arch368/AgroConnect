@@ -11,7 +11,9 @@ const SearchUsers = () => {
       {/* Header */}
       <View className="flex-row items-center justify-center mb-8">
         <Search size={34} color="#7c3aed" />
-        <Text className="ml-3 text-2xl font-bold text-purple-600">Search Member</Text>
+        <Text className="ml-3 text-2xl font-bold text-black">
+          Search Member
+        </Text>
       </View>
 
       {/* Search Card */}
@@ -26,15 +28,22 @@ const SearchUsers = () => {
           value={searchValue}
           onChangeText={setSearchValue}
         />
-        <TouchableOpacity className="flex-row items-center justify-center bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl py-4 mb-8 shadow-md">
-          <Search color="#fff" size={20} />
-          <Text className="ml-2 text-md font-semibold text-center text-white">Search</Text>
-        </TouchableOpacity>
+         <TouchableOpacity
+                  className="flex-row items-center justify-center bg-purple-600 rounded-xl py-4 mb-12 shadow-md"
+                 
+                >
+                  <Search color="#fff" size={18} />
+                  <Text className="ml-2 text-base font-semibold text-white">
+                    Search Member
+                  </Text>
+                </TouchableOpacity>
       </View>
 
       {/* Result Card */}
       <View className="bg-white rounded-2xl shadow-md p-6 items-center">
-        <Text className="font-bold text-base text-gray-700 mb-3">Member ID</Text>
+        <Text className="font-bold text-base text-gray-700 mb-3">
+          Member ID
+        </Text>
         <TextInput
           className="bg-gray-100 rounded-xl h-12 w-full px-4 text-base border border-gray-200 mb-3"
           placeholder="Member ID"
