@@ -1,12 +1,12 @@
-import { View, Text } from 'react-native'
+import { View, Text,ScrollView } from 'react-native'
 import React from 'react'
 import SearchUsers from '@/components/SearchUsers'
 
 const SearchUser = () => {
   return (
-    <View>
+   <ScrollView className='flex-1'>
      <SearchUsers/>
-    </View>
+    </ScrollView>
   )
 }
 
