@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { Search } from "lucide-react-native";
 
 const SearchUsers = () => {
@@ -7,34 +7,36 @@ const SearchUsers = () => {
   const [memberId, setMemberId] = useState("");
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1 bg-gray-50 px-5 py-8">
       {/* Header */}
-      <View style={styles.headerRow}>
+      <View className="flex-row items-center justify-center mb-8">
         <Search size={34} color="#7c3aed" />
-        <Text style={styles.headerText}>Search Member</Text>
+        <Text className="ml-3 text-2xl font-bold text-purple-600">Search Member</Text>
       </View>
 
       {/* Search Card */}
-      <View style={styles.card}>
-        <Text style={styles.cardLabel}>Enter Mobile Number / Member ID</Text>
+      <View className="bg-white rounded-2xl shadow-md p-6 mb-8">
+        <Text className="font-semibold text-base text-gray-700 mb-3">
+          Enter Mobile Number / Member ID
+        </Text>
         <TextInput
-          style={styles.input}
+          className="bg-gray-100 rounded-xl h-12 px-4 text-base mb-4 border border-gray-200"
           placeholder="e.g. 9876543210 or MEM1234"
           placeholderTextColor="#9ca3af"
           value={searchValue}
           onChangeText={setSearchValue}
         />
-        <TouchableOpacity style={styles.searchButton} onPress={() => setMemberId(searchValue)}>
+        <TouchableOpacity className="flex-row items-center justify-center bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl py-4 mb-8 shadow-md">
           <Search color="#fff" size={20} />
-          <Text style={styles.searchButtonText}>Search</Text>
+          <Text className="ml-2 text-md font-semibold text-center text-white">Search</Text>
         </TouchableOpacity>
       </View>
 
       {/* Result Card */}
-      <View style={styles.resultCard}>
-        <Text style={styles.resultLabel}>Member ID</Text>
+      <View className="bg-white rounded-2xl shadow-md p-6 items-center">
+        <Text className="font-bold text-base text-gray-700 mb-3">Member ID</Text>
         <TextInput
-          style={styles.resultInput}
+          className="bg-gray-100 rounded-xl h-12 w-full px-4 text-base border border-gray-200 mb-3"
           placeholder="Member ID"
           placeholderTextColor="#9ca3af"
           value={memberId}
@@ -42,121 +44,14 @@ const SearchUsers = () => {
         />
 
         {/* Placeholder result fields */}
-        <View style={styles.placeholderList}>
-          <View style={styles.placeholderLine} />
-          <View style={styles.placeholderLine} />
-          <View style={styles.placeholderLine} />
+        <View className="w-full mt-2">
+          <View className="bg-gray-100 h-4 rounded mb-2" />
+          <View className="bg-gray-100 h-4 rounded mb-2" />
+          <View className="bg-gray-100 h-4 rounded" />
         </View>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8fafc", // tailwind bg-gray-50
-    paddingHorizontal: 20,
-    paddingVertical: 32,
-  },
-  headerRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 32,
-  },
-  headerText: {
-    marginLeft: 12,
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#7c3aed",
-  },
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    shadowColor: "#000",
-    shadowOpacity: 0.07,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-    padding: 24,
-    marginBottom: 32,
-    elevation: 2
-  },
-  cardLabel: {
-    fontWeight: "600",
-    fontSize: 16,
-    color: "#374151",
-    marginBottom: 12,
-  },
-  input: {
-    backgroundColor: "#f3f4f6",
-    borderRadius: 12,
-    height: 48,
-    paddingHorizontal: 16,
-    fontSize: 16,
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: "#e5e7eb"
-  },
-  searchButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#7c3aed",
-    borderRadius: 16,
-    paddingVertical: 16,
-    marginBottom: 32,
-    shadowColor: "#000",
-    shadowOpacity: 0.12,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
-  },
-  searchButtonText: {
-    marginLeft: 8,
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#fff",
-    textAlign: "center",
-  },
-  resultCard: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    shadowColor: "#000",
-    shadowOpacity: 0.07,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-    padding: 24,
-    alignItems: "center",
-    elevation: 2
-  },
-  resultLabel: {
-    fontWeight: "bold",
-    fontSize: 16,
-    color: "#374151",
-    marginBottom: 12,
-  },
-  resultInput: {
-    backgroundColor: "#f3f4f6",
-    borderRadius: 12,
-    height: 48,
-    width: "100%",
-    paddingHorizontal: 16,
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: "#e5e7eb",
-    marginBottom: 12,
-  },
-  placeholderList: {
-    width: "100%",
-    marginTop: 8,
-  },
-  placeholderLine: {
-    backgroundColor: "#f3f4f6",
-    height: 16,
-    borderRadius: 6,
-    marginBottom: 8,
-  },
-});
 
 export default SearchUsers;
