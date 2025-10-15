@@ -39,72 +39,152 @@ const Signup = () => {
   const handleSignup = () => {
     if (validate()) {
       // Handle your signup logic here (e.g., API call)
-      // On success, route to dashboard or login
       router.push('/dashboard');
     }
   };
 
   return (
     <Background>
-      <View className="w-full items-center">
-       
+      <View style={{
+        width: '100%',
+        alignItems: 'center'
+      }}>
         <Image
           source={require('../assets/images/logo.png')}
           style={{ width: 106, height: 106, marginBottom: 24, marginTop: 24 }}
           resizeMode="contain"
         />
 
+        <Text style={{
+          fontSize: 26,
+          fontWeight: 'bold',
+          marginBottom: 10,
+          color: '#fff',
+          textAlign: 'center',
+          textShadowColor: 'rgba(0,0,0,0.34)',
+          textShadowOffset: { width: 2, height: 2 },
+          textShadowRadius: 8
+        }}>
+          Create Account
+        </Text>
 
-        <Text className="text-2xl font-bold mb-8 text-purple-600 text-center">Create Account</Text>
+        {/* Frosted-like Overlay */}
+        <View style={{
+          width: '90%',
+          maxWidth: 400,
+          borderRadius: 16,
+          padding: 24,
+          backgroundColor: 'rgba(30,41,82,0.37)',
+          alignSelf: 'center',
+          borderWidth: 1,
+          borderColor: 'rgba(255,255,255,0.24)',
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 12 },
+          shadowOpacity: 0.23,
+          shadowRadius: 14,
+          elevation: 5
+        }}>
+          {/* Name */}
+          <TextInput
+            style={{
+              backgroundColor: 'rgba(255,255,255,0.61)',
+              borderWidth: 1.2,
+              borderColor: errors.name ? '#eb2f2f' : '#b8b8b8',
+              color: '#212121',
+              borderRadius: 8,
+              paddingHorizontal: 16,
+              paddingVertical: 12,
+              fontSize: 15,
+              marginBottom: 3
+            }}
+            placeholder="Name"
+            placeholderTextColor="#888"
+            value={name}
+            onChangeText={setName}
+            autoCapitalize="words"
+          />
+          {errors.name ? <Text style={{ color: '#b91c1c', marginBottom: 7, fontSize: 12, fontWeight: '600' }}>{errors.name}</Text> : null}
 
-    
-        <TextInput
-          className="bg-white border border-gray-400 rounded-md px-4 py-3 mb-2 text-base w-full"
-          placeholder="Name"
-          placeholderTextColor="#888"
-          value={name}
-          onChangeText={setName}
-          autoCapitalize="words"
-        />
-        {errors.name ? <Text className="text-red-500 mb-2 w-full">{errors.name}</Text> : null}
+          {/* Email */}
+          <TextInput
+            style={{
+              backgroundColor: 'rgba(255,255,255,0.61)',
+              borderWidth: 1.2,
+              borderColor: errors.email ? '#eb2f2f' : '#b8b8b8',
+              color: '#212121',
+              borderRadius: 8,
+              paddingHorizontal: 16,
+              paddingVertical: 12,
+              fontSize: 15,
+              marginBottom: 3
+            }}
+            placeholder="Email"
+            placeholderTextColor="#888"
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize="none"
+            keyboardType="email-address"
+          />
+          {errors.email ? <Text style={{ color: '#b91c1c', marginBottom: 7, fontSize: 12, fontWeight: '600' }}>{errors.email}</Text> : null}
 
-        
-        <TextInput
-          className="bg-white border border-gray-400 rounded-md px-4 py-3 mb-2 text-base w-full"
-          placeholder="Email"
-          placeholderTextColor="#888"
-          value={email}
-          onChangeText={setEmail}
-          autoCapitalize="none"
-          keyboardType="email-address"
-        />
-        {errors.email ? <Text className="text-red-500 mb-2 w-full">{errors.email}</Text> : null}
+          {/* Password */}
+          <TextInput
+            style={{
+              backgroundColor: 'rgba(255,255,255,0.61)',
+              borderWidth: 1.2,
+              borderColor: errors.password ? '#eb2f2f' : '#b8b8b8',
+              color: '#212121',
+              borderRadius: 8,
+              paddingHorizontal: 16,
+              paddingVertical: 12,
+              fontSize: 15,
+              marginBottom: 3
+            }}
+            placeholder="Password"
+            placeholderTextColor="#888"
+            value={password}
+            secureTextEntry
+            onChangeText={setPassword}
+          />
+          {errors.password ? <Text style={{ color: '#b91c1c', marginBottom: 7, fontSize: 12, fontWeight: '600' }}>{errors.password}</Text> : null}
 
-    
-        <TextInput
-          className="bg-white border border-gray-400 rounded-md px-4 py-3 mb-4 text-base w-full"
-          placeholder="Password"
-          placeholderTextColor="#888"
-          value={password}
-          secureTextEntry
-          onChangeText={setPassword}
-        />
-        {errors.password ? <Text className="text-red-500 mb-2 w-full">{errors.password}</Text> : null}
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#9333ea',
+              borderRadius: 9,
+              paddingVertical: 15,
+              marginBottom: 14,
+              width: '100%',
+              shadowColor: '#000',
+              shadowOpacity: 0.19,
+              shadowOffset: { width: 0, height: 3 },
+              shadowRadius: 6,
+              elevation: 3
+            }}
+            activeOpacity={0.85}
+            onPress={handleSignup}
+          >
+            <Text style={{
+              color: '#fff',
+              fontWeight: 'bold',
+              fontSize: 18,
+              textAlign: 'center',
+              letterSpacing: 1
+            }}>SIGN UP</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          className="bg-purple-600 rounded-md py-4 mb-6 w-full"
-          activeOpacity={0.85}
-          onPress={handleSignup}
-        >
-          <Text className="text-white font-bold text-lg text-center tracking-wider">SIGN UP</Text>
-        </TouchableOpacity>
-
-       
-        <View className="flex-row justify-center w-full mt-2">
-          <Text className="text-gray-700">Already have an account? </Text>
-          <Pressable onPress={() => router.push('/login')}>
-            <Text className="font-bold text-purple-600 underline ml-1">Login</Text>
-          </Pressable>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', width: '100%' }}>
+            <Text style={{ color: '#7dd3fc', fontSize: 14, fontWeight: 'bold' }}>Already have an account? </Text>
+            <Pressable onPress={() => router.push('/login')}>
+              <Text style={{
+                fontWeight: 'bold',
+                color: '#fff',
+                textDecorationLine: 'underline',
+                fontSize: 14,
+                marginLeft: 2
+              }}>Login</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </Background>
